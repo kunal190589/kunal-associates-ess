@@ -67,7 +67,7 @@ function parseSheet(sheet: XLSX.WorkSheet) {
   const dataRows = rows.filter((row) => {
     const id = String(row[uniqueHeaders.find((h) => norm(h).includes("employee code")) ?? ""] ?? "").trim();
     const name = String(row[uniqueHeaders.find((h) => norm(h).includes("name of employees")) ?? ""] ?? "").trim();
-    return Boolean(name || id) && !/^total/i.test(name) && !/^total/i.test(id);
+    return Boolean(name || id) && !/^(grand\\s+)?total\\b/i.test(name) && !/^(grand\\s+)?total\\b/i.test(id) && !/^(subtotal|summary)\\b/i.test(name);
   });
   return { headers: uniqueHeaders, rows: dataRows, score: bestScore };
 }
